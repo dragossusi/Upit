@@ -1,9 +1,11 @@
 package ro.rachieru.dragos.upit.app
 
 import android.app.Application
+import com.crashlytics.android.Crashlytics
 import com.facebook.drawee.backends.pipeline.Fresco
 import org.koin.android.ext.android.startKoin
 import ro.rachieru.dragos.upit.screens.authentification.login.loginModule
+import ro.rachierudragos.upitapi.upitApiModule
 
 class UpitApp : Application() {
 
@@ -13,8 +15,9 @@ class UpitApp : Application() {
         startKoin(
             androidContext = this,
             modules = listOf(
-                loginModule,
-                activityBuilderModule
+                upitModule,
+                upitApiModule,
+                loginModule
             )
         )
     }

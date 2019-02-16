@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "471132777643",
+    "firebase_url": "https://amiss-25454.firebaseio.com",
+    "project_id": "amiss-25454",
+    "storage_bucket": "amiss-25454.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:471132777643:android:4c5db720d794a058",
+        "android_client_info": {
+          "package_name": "ro.rachieru.dragos.upit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "471132777643-4fmh46gf9pbrbrifhsimv68u155k8upb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ro.rachieru.dragos.upit",
+            "certificate_hash": "8f1f70205787ae7c1484966403496c31060566e1"
+          }
+        },
+        {
+          "client_id": "471132777643-rn1hcbben2lg5c1j4agatnneu4l50eeu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCibJRjpQNzniKKSbwwOBrQXaFcOd5BJck"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "471132777643-rn1hcbben2lg5c1j4agatnneu4l50eeu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "471132777643-6vd1mi7ekm3b4c5mr21vjbl8jkei5p39.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "ivangabriel.AMISS"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -12,17 +12,29 @@ import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.nav_header_main.view.*
+import org.koin.android.ext.android.inject
 import ro.rachieru.dragos.upit.R
 import ro.rachieru.dragos.upit.databinding.ActivityMainBinding
 import ro.rachieru.dragos.upit.news.view.NewsFragment
+import ro.rachieru.dragos.upit.saving.LocalSaving
 import ro.rachieru.dragos.upit.screens.authentification.login.view.LoginActivity
+import ro.rachierudragos.upitapi.UserDetails
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var _binding: ActivityMainBinding
 
+    private val localSaving: LocalSaving by inject()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (localSaving.userId == -1) {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+            return
+        }
+
         _binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setSupportActionBar(toolbar)
 
@@ -39,6 +51,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
+/*        localSaving.user?.let {user->
+            nav_view.getHeaderView(0).let {
+//                it.image_user
+                it.text_user_name.text = user.name
+                it.text_user_email.text = user.email
+            }
+        }*/
         nav_view.setNavigationItemSelectedListener(this)
     }
 
@@ -47,22 +66,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             drawer_layout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        when (item.itemId) {
-            R.id.action_settings -> return true
-            else -> return super.onOptionsItemSelected(item)
         }
     }
 

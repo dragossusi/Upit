@@ -8,12 +8,8 @@ import ro.rachieru.dragos.upit.screens.authentification.login.view.LoginActivity
 
 val loginModule = module {
 
-    factory { (activity: LoginActivity) ->
-        activity as ILoginViewDelegate
-    }
-
-    factory {
-        LoginPresenter(get(), get()) as ILoginPresenter
+    factory<ILoginPresenter> { (view: ILoginViewDelegate) ->
+        LoginPresenter(get(), view)
     }
 
 }

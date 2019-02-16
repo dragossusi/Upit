@@ -1,5 +1,6 @@
 package ro.rachieru.dragos.upit.base
 
-interface IPresenter {
+interface IPresenter /*<V:IBaseViewDelegate>*/ {
+    //    var viewDelegate: V
     fun dispose()
 }
