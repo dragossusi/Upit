@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import ro.rachieru.dragos.upit.R
 import android.content.Intent
 import android.os.Handler
-import ro.rachieru.dragos.upit.screens.main.MainActivity
+import ro.rachieru.dragos.upit.screens.main.view.MainActivity
 
 
 class SplashActivity : AppCompatActivity() {

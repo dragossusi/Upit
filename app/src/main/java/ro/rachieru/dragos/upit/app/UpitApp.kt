@@ -1,25 +1,25 @@
 package ro.rachieru.dragos.upit.app
 
 import android.app.Application
-import com.crashlytics.android.Crashlytics
-import com.facebook.drawee.backends.pipeline.Fresco
-import org.koin.android.ext.android.startKoin
-import ro.rachieru.dragos.upit.screens.authentification.login.loginModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 import ro.rachierudragos.upitapi.upitApiModule
 
 class UpitApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        Fresco.initialize(this)
-        startKoin(
-            androidContext = this,
-            modules = listOf(
-                upitModule,
-                upitApiModule,
-                loginModule
+        startKoin {
+            androidLogger()
+            androidContext(this@UpitApp)
+            modules(
+                listOf(
+                    upitModule,
+                    upitApiModule
+                )
             )
-        )
+        }
     }
 
 }

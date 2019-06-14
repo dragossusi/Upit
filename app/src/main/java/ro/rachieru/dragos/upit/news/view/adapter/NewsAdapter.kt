@@ -2,26 +2,32 @@ package ro.rachieru.dragos.upit.news.view.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import ro.rachieru.dragos.upit.pojos.News
+import ro.rachierudragos.upitapi.entities.response.NewsResponse
 
-class NewsAdapter :  RecyclerView.Adapter<NewsViewHolder>() {
+class NewsAdapter : RecyclerView.Adapter<NewsViewHolder>() {
 
-    private val items = ArrayList<News>().apply{
-        add(News(
-            "https://i.ytimg.com/vi/I1_A_mMQa9k/maxresdefault.jpg",
-            "VP in quals",
-            "Pavaga and Winstrike are now out"
-        ))
-        add(News(
-            "https://i.ytimg.com/vi/I1_A_mMQa9k/maxresdefault.jpg",
-            "VP in quals",
-            "Pavaga and Winstrike are now out"
-        ))
-        add(News(
-            "https://i.ytimg.com/vi/I1_A_mMQa9k/maxresdefault.jpg",
-            "VP in quals",
-            "Pavaga and Winstrike are now out"
-        ))
+    private val items = ArrayList<NewsResponse>().apply {
+        add(
+            NewsResponse(
+                images = listOf("https://i.ytimg.com/vi/I1_A_mMQa9k/maxresdefault.jpg"),
+                title = "VP in quals",
+                description = "Pavaga and Winstrike are now out"
+            )
+        )
+        add(
+            NewsResponse(
+                images = listOf("https://i.ytimg.com/vi/I1_A_mMQa9k/maxresdefault.jpg"),
+                title = "VP in quals",
+                description = "Pavaga and Winstrike are now out"
+            )
+        )
+        add(
+            NewsResponse(
+                images = listOf("https://i.ytimg.com/vi/I1_A_mMQa9k/maxresdefault.jpg"),
+                title = "VP in quals",
+                description = "Pavaga and Winstrike are now out"
+            )
+        )
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {

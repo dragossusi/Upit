@@ -1,6 +1,6 @@
 package ro.rachieru.dragos.upit.news.presenter
 
-import ro.rachieru.dragos.upit.base.IPresenter
+import ro.rachieru.dragos.base.IPresenter
 
 interface INewsPresenter : IPresenter {
 }

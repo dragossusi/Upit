@@ -138,7 +138,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/av/ic_art_track_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/communication/ic_call_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -148,7 +148,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_news" />
+                            <entry key="outputName" value="ic_call_accept" />
                             <entry key="sourceFile" value="C:\Users\Dragos" />
                           </map>
                         </option>

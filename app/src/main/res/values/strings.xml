@@ -13,4 +13,8 @@
     <string name="logout">Logout</string>
     <string name="profile">Profile</string>
     <string name="news">News</string>
+    <string name="email">Email</string>
+    <string name="name">Nume</string>
+    <string name="change_cv">Change CV</string>
+    <string name="video_call_is_calling">%s is calling you</string>
 </resources>
