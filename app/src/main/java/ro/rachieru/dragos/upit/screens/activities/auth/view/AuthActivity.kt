@@ -1,8 +1,8 @@
 package ro.rachieru.dragos.upit.screens.activities.auth.view
 
 import android.os.Bundle
-import ro.rachieru.dragos.upit.R
 import ro.rachieru.dragos.base.BaseActivity
+import ro.rachieru.dragos.upit.R
 import ro.rachieru.dragos.upit.screens.activities.auth.presenter.AuthPresenter
 import ro.rachieru.dragos.upit.screens.activities.auth.presenter.IAuthPresenter
 import ro.rachieru.dragos.upit.screens.fragments.login.view.LoginFragment

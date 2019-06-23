@@ -1,4 +1,4 @@
-package ro.rachieru.dragos.upit.news.presenter
+package ro.rachieru.dragos.upit.screens.fragments.news.presenter
 
 import ro.rachieru.dragos.base.IPresenter
 

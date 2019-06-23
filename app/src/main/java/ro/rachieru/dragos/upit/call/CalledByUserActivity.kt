@@ -1,7 +1,6 @@
 package ro.rachieru.dragos.upit.call
 
 import android.Manifest
-import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -11,13 +10,13 @@ import android.media.RingtoneManager
 import android.os.Bundle
 import android.os.PowerManager
 import android.os.Vibrator
-import android.support.annotation.NonNull
-import android.support.v4.app.ActivityCompat
-import android.support.v7.widget.AppCompatImageView
-import android.support.v7.widget.AppCompatTextView
 import android.view.View
 import android.view.WindowManager
 import android.webkit.URLUtil
+import androidx.annotation.NonNull
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.app.ActivityCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import org.appspot.apprtc.CallActivity
@@ -25,7 +24,6 @@ import ro.rachieru.dragos.base.BaseActivity
 import ro.rachieru.dragos.upit.R
 import ro.rachierudragos.upitapi.UpitApi
 import ro.rachierudragos.upitapi.entities.response.CallResponse
-import ro.rachierudragos.upitapi.entities.response.NotificationResponse
 import ro.rachierudragos.upitapi.entities.response.VideoCallBroadcastManager
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -263,8 +261,6 @@ class CalledByUserActivity : BaseActivity<VideoCallPresenter>(), View.OnClickLis
     fun onVideoCallError(error: String) {
         presenter.cancelVideoCall(this, mSendingUserId!!, mReceivingUserId!!)
     }
-
-    fun onNoInternetConnection() {}
 
     private fun initView() {
         mAvatarImageView = findViewById(R.id.image_user)

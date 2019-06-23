@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Upit</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="settings">Setări</string>
+    <string name="username">Nume de utilizator</string>
+    <string name="login">Login</string>
+    <string name="password">Parolă</string>
+    <string name="register">Înregistrare</string>
+    <string name="logout">Logout</string>
+    <string name="profile">Profil</string>
+    <string name="news">News</string>
+    <string name="email">Email</string>
+    <string name="name">Nume</string>
+    <string name="change_cv">Schimbă CV</string>
+    <string name="video_call_is_calling">%s te apelează</string>
+    <string name="call">Apelează</string>
+    <string name="error_user_no_devices">Utilizatorul nu are niciun device pentru a fi apelat</string>
+    <string name="error_user_not_found">Utilizatorul nu a fost găsit</string>
+    <string name="jobs">Joburi</string>
+    <string name="my_profile">Profilul meu</string>
+    <string name="phone">Telefon</string>
+</resources>

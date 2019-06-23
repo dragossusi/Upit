@@ -1,7 +1,5 @@
 package ro.rachieru.dragos.upit.call
 
-import java.lang.Exception
-
 /**
  * Upit
  *

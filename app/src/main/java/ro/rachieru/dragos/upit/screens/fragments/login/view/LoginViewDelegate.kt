@@ -1,10 +1,10 @@
 package ro.rachieru.dragos.upit.screens.fragments.login.view
 
-import ro.rachieru.dragos.base.ViewDelegate
-import ro.rachierudragos.upitapi.entities.response.AuthResponse
+import ro.rachieru.dragos.base.ProgressViewDelegate
+import ro.rachierudragos.upitapi.entities.response.TokenResponse
 
-interface LoginViewDelegate : ViewDelegate {
+interface LoginViewDelegate : ProgressViewDelegate {
 
-    fun onLoginSuccess(t: AuthResponse)
+    fun onLoginSuccess(t: TokenResponse)
 
 }

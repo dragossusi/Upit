@@ -1,11 +1,11 @@
-package ro.rachieru.dragos.upit.news.details
+package ro.rachieru.dragos.upit.screens.fragments.news.details
 
 import android.os.Bundle
 import android.os.PersistableBundle
 import kotlinx.android.synthetic.main.activity_news_details.*
-import ro.rachieru.dragos.upit.R
 import ro.rachieru.dragos.base.BaseActivity
-import ro.rachieru.dragos.base.ViewDelegate
+import ro.rachieru.dragos.base.ProgressViewDelegate
+import ro.rachieru.dragos.upit.R
 import ro.rachieru.dragos.upit.utils.BUNDLE_RESOURCE_ID
 import ro.rachierudragos.upitapi.UpitApi
 import ro.rachierudragos.upitapi.entities.response.NewsResponse
@@ -16,7 +16,7 @@ import ro.rachierudragos.upitapi.entities.response.NewsResponse
  * @author Dragos
  * @since 06.06.2019
  */
-class NewsDetailsActivity : BaseActivity<NewsDetailsPresenter>(), ViewDelegate {
+class NewsDetailsActivity : BaseActivity<NewsDetailsPresenter>(), ProgressViewDelegate {
 
     private var newsId: Int = 0
 
@@ -29,7 +29,7 @@ class NewsDetailsActivity : BaseActivity<NewsDetailsPresenter>(), ViewDelegate {
         setContentView(R.layout.activity_news_details)
         setSupportActionBar(toolbar)
         newsId = intent.getIntExtra(BUNDLE_RESOURCE_ID, 0)
-        presenter.getNewsDetails(newsId)
+        presenter.getNewsDetails(this, newsId)
     }
 
     fun onNewsDetails(news: NewsResponse) {
@@ -37,4 +37,11 @@ class NewsDetailsActivity : BaseActivity<NewsDetailsPresenter>(), ViewDelegate {
         text_details.text = news.description
     }
 
+    override fun showProgress() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun hideProgress() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 }

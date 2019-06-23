@@ -3,9 +3,10 @@ package ro.rachieru.dragos.base.saving
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
+import ro.rachierudragos.upitapi.TokenSaving
 import ro.rachierudragos.upitapi.UserDetails
 
-class LocalSaving(private val context: Context) {
+class LocalSaving(private val context: Context) : TokenSaving {
 
     val gson = Gson()
 
@@ -15,7 +16,7 @@ class LocalSaving(private val context: Context) {
         preferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
     }
 
-    var token: String?
+    override var token: String?
         get() = preferences
             .getString(PREF_TOKEN, null)
         set(value) {
@@ -40,11 +41,11 @@ class LocalSaving(private val context: Context) {
                 context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
                     .getString(PREF_USER, ""), UserDetails::class.java
             )
-            details?.id = userId!!
+//            details?.id = userId!!
             return details
         }
         set(value) {
-            userId = value?.id
+//            userId = value?.id
             context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
                 .edit()
                 .putString(PREF_USER_ID, gson.toJson(value))

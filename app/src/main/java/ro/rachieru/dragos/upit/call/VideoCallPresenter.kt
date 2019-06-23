@@ -1,11 +1,10 @@
 package ro.rachieru.dragos.upit.call
 
 import android.Manifest.permission.*
-import io.reactivex.android.schedulers.AndroidSchedulers
 import android.content.Context
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import io.reactivex.Completable
-import io.reactivex.functions.Consumer
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import ro.rachieru.dragos.base.Presenter
 import ro.rachierudragos.upitapi.UpitApi

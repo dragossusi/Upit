@@ -1,8 +1,8 @@
 package ro.rachieru.dragos.upit.service
 
+import android.util.Log
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import android.util.Log
 import com.google.gson.Gson
 import ro.rachieru.dragos.upit.call.CalledByUserActivity
 import ro.rachierudragos.upitapi.entities.response.UserDetails

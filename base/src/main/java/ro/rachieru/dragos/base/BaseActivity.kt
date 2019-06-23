@@ -1,8 +1,8 @@
 package ro.rachieru.dragos.base
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import org.koin.android.ext.android.inject
 import ro.rachieru.dragos.base.saving.LocalSaving
 import ro.rachierudragos.upitapi.UpitApi
@@ -25,5 +25,9 @@ abstract class BaseActivity<P : IPresenter> : AppCompatActivity(), ViewDelegate 
 
     override fun onError(e: Throwable) {
         Toast.makeText(this, e.message ?: getString(R.string.error_general), Toast.LENGTH_LONG).show()
+    }
+
+    override fun onNoInternetConnection() {
+        Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show()
     }
 }

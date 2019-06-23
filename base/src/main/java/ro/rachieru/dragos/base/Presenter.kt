@@ -27,12 +27,12 @@ abstract class Presenter/*<V : ViewDelegate>*/ : IPresenter/*<V>*/ {
         add(d)
     }
 
-    fun doIfHasInternet(context: Context, d: Disposable, onStart: (() -> Unit)? = null, onError: (() -> Unit)? = null) {
+    fun doIfHasInternet(context: Context, d: Disposable, onStart: (() -> Unit)? = null, onNoInternet: (() -> Unit)? = null) {
         if (context.hasActiveInternetConnection()) {
             onStart?.invoke()
             add(d)
         } else {
-            onError?.invoke()
+            onNoInternet?.invoke()
         }
     }
 

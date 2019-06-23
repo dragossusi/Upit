@@ -3,10 +3,10 @@ package ro.rachierudragos.upitapi.entities.response
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class JobsResponse(
+class JobsResponse(
 
     @field:SerializedName("images")
-    val images: List<Any?>? = null,
+    val images: List<String>? = null,
 
     @field:SerializedName("__v")
     val V: Int? = null,
@@ -27,7 +27,11 @@ data class JobsResponse(
     val priority: String? = null,
 
     @field:SerializedName("status")
-    val status: String? = null
+    val status: String? = null,
+
+    @field:SerializedName("userId")
+    val userId: String? = null
+
 ) {
     @Expose
     var pagerPosition: Int = 0

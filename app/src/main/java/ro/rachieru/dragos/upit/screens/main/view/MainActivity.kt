@@ -1,40 +1,52 @@
 package ro.rachieru.dragos.upit.screens.main.view
 
 import android.content.Intent
-import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.design.widget.NavigationView
-import android.support.design.widget.Snackbar
-import android.support.v4.view.GravityCompat
-import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
+import androidx.databinding.DataBindingUtil
+import com.bumptech.glide.Glide
+import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
-import ro.rachieru.dragos.upit.screens.activities.auth.view.AuthActivity
-import ro.rachieru.dragos.upit.R
+import kotlinx.android.synthetic.main.nav_header_main.view.*
 import ro.rachieru.dragos.base.BaseActivity
+import ro.rachieru.dragos.base.ProgressViewDelegate
+import ro.rachieru.dragos.upit.R
 import ro.rachieru.dragos.upit.databinding.ActivityMainBinding
-import ro.rachieru.dragos.upit.news.view.NewsFragment
+import ro.rachieru.dragos.upit.screens.activities.auth.view.AuthActivity
+import ro.rachieru.dragos.upit.screens.fragments.jobs.JobsFragment
+import ro.rachieru.dragos.upit.screens.fragments.news.view.NewsFragment
 import ro.rachieru.dragos.upit.screens.main.presenter.IMainPresenter
 import ro.rachieru.dragos.upit.screens.main.presenter.MainPresenter
+import ro.rachieru.dragos.upit.screens.myprofile.MyProfileFragment
 import ro.rachierudragos.upitapi.UpitApi
+import ro.rachierudragos.upitapi.UserDetails
 
-class MainActivity : BaseActivity<IMainPresenter>(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : BaseActivity<IMainPresenter>(), NavigationView.OnNavigationItemSelectedListener,
+    ProgressViewDelegate {
 
     private lateinit var _binding: ActivityMainBinding
 
     override fun initPresenter(api: UpitApi): IMainPresenter {
-        return MainPresenter(api)
+        return MainPresenter(api, this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (localSaving.userId == null) {
+        if (localSaving.token == null) {
             startActivity(Intent(this, AuthActivity::class.java))
             finish()
             return
         }
 
+        setContentView(R.layout.loading_placeholder)
+        presenter.getMyUserDetails(this)
+    }
+
+    fun onUserDetails(user: UserDetails) {
         _binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setSupportActionBar(toolbar)
 
@@ -51,14 +63,23 @@ class MainActivity : BaseActivity<IMainPresenter>(), NavigationView.OnNavigation
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
-/*        localSaving.user?.let {user->
-            nav_view.getHeaderView(0).let {
-//                it.image_user
-                it.text_user_name.text = user.name
-                it.text_user_email.text = user.email
-            }
-        }*/
+        nav_view.getHeaderView(0).let {
+            Glide.with(this)
+                .load(user.profilePic)
+                .into(it.image_user)
+            it.text_user_name.text = user.fullName
+            it.text_user_email.text = user.email
+        }
+
         nav_view.setNavigationItemSelectedListener(this)
+    }
+
+    override fun showProgress() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun hideProgress() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onBackPressed() {
@@ -77,8 +98,15 @@ class MainActivity : BaseActivity<IMainPresenter>(), NavigationView.OnNavigation
                     .replace(R.id.fragments_view, NewsFragment())
                     .commit()
             }
-            R.id.nav_settings -> {
-
+            R.id.nav_jobs -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragments_view, JobsFragment())
+                    .commit()
+            }
+            R.id.nav_my_profile -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragments_view, MyProfileFragment())
+                    .commit()
             }
             R.id.nav_logout -> {
                 startActivity(Intent(this, AuthActivity::class.java))
@@ -88,5 +116,19 @@ class MainActivity : BaseActivity<IMainPresenter>(), NavigationView.OnNavigation
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun onNoInternetConnection() {
+        super.onNoInternetConnection()
+        if (!this::_binding.isInitialized) {
+            finish()
+        }
+    }
+
+    override fun onError(e: Throwable) {
+        super.onError(e)
+        if (!this::_binding.isInitialized) {
+            finish()
+        }
     }
 }

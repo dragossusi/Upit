@@ -1,10 +1,10 @@
 package ro.rachieru.dragos.upit.screens
 
-import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import ro.rachieru.dragos.upit.R
 import android.content.Intent
+import android.os.Bundle
 import android.os.Handler
+import androidx.appcompat.app.AppCompatActivity
+import ro.rachieru.dragos.upit.R
 import ro.rachieru.dragos.upit.screens.main.view.MainActivity
 
 

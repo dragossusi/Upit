@@ -2,7 +2,7 @@ package ro.rachieru.dragos.upit.app
 
 //val activityBuilderModule = module {
 //
-//    single<UpitApi> {
+//    single<UpitApiNode> {
 //        Retrofit.Builder()
 //            .addConverterFactory(GsonConverterFactory.create())
 //            .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())

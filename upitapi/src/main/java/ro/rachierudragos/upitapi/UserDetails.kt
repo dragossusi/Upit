@@ -3,14 +3,25 @@ package ro.rachierudragos.upitapi
 import com.google.gson.annotations.SerializedName
 
 class UserDetails(
-    @SerializedName("id")
-    var id: String,
-    @SerializedName("name")
-    var name: String,
-    @SerializedName("username")
-    var username: String,
-    @SerializedName("email")
-    var email: String? = null,
-    @SerializedName("phone")
-    var phone: String? = null
+
+    @field:SerializedName("firstName")
+    val firstName: String? = null,
+
+    @field:SerializedName("lastName")
+    val lastName: String? = null,
+
+    @field:SerializedName("profilePic")
+    val profilePic: String? = null,
+
+    @field:SerializedName("fullName")
+    val fullName: String? = null,
+
+    @field:SerializedName("loginProvider")
+    val loginProvider: Any? = null,
+
+    @field:SerializedName("email")
+    val email: String? = null,
+
+    @field:SerializedName("hasRegistered")
+    val hasRegistered: Boolean? = null
 )
