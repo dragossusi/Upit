@@ -42,15 +42,16 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                     if (data.containsKey("action")) {
                         when (data["action"]) {
                             "send" -> {
-                                val from = gson.fromJson<UserDetails>(data["fromUser"], UserDetails::class.java)
+//                                val from = gson.fromJson<UserDetails>(data["fromUser"], UserDetails::class.java)
+                                val id = data["userID"]!!
                                 CalledByUserActivity.startActivity(
                                     this,
-                                    from.id!!,
-                                    from.id!!,
-                                    from.id!!,
-                                    from.name!!,
-                                    data["chatRoom"]!!,
-                                    from.avatarPath
+                                    id,
+                                    id,
+                                    id,
+                                    data["fromUser"]!!,
+                                    data["chatRoomId"]!!,
+                                    data["avatar"]
                                 )
                             }
                             "rejected" -> VideoCallBroadcastManager.sendStatus(

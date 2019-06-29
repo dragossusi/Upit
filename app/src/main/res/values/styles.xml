@@ -32,4 +32,9 @@
 
     </style>
 
+    <style name="BlueButton">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@drawable/shape_blue_button</item>
+    </style>
+
 </resources>

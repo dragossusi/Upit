@@ -1,11 +1,11 @@
 package ro.rachierudragos.upitapi.entities.response
 
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.IntentFilter
 import android.content.Intent
 import androidx.annotation.StringDef
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 
 
 /**
@@ -26,7 +26,7 @@ object VideoCallBroadcastManager {
     }
 
     fun sendStatus(context: Context, @CallStatus state: String) {
-        val localBroadcastManager = androidx.localbroadcastmanager.content.LocalBroadcastManager.getInstance(context)
+        val localBroadcastManager = LocalBroadcastManager.getInstance(context)
         val intent = Intent(VIDEO_CALL_FILTER)
         intent.putExtra(VIDEO_CALL_EXTRA, state)
         localBroadcastManager.sendBroadcast(intent)

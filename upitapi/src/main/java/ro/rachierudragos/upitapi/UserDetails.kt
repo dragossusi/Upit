@@ -4,24 +4,31 @@ import com.google.gson.annotations.SerializedName
 
 class UserDetails(
 
+//    @get:Bindable
     @field:SerializedName("firstName")
-    val firstName: String? = null,
+    var firstName: String? = null,
 
+//    @get:Bindable
     @field:SerializedName("lastName")
-    val lastName: String? = null,
+    var lastName: String? = null,
 
+//    @get:Bindable
     @field:SerializedName("profilePic")
-    val profilePic: String? = null,
+    var profilePic: String? = null,
 
+//    @get:Bindable
     @field:SerializedName("fullName")
-    val fullName: String? = null,
+    var fullName: String? = null,
 
+//    @get:Bindable
     @field:SerializedName("loginProvider")
-    val loginProvider: Any? = null,
+    var loginProvider: Any? = null,
 
+//    @get:Bindable
     @field:SerializedName("email")
-    val email: String? = null,
+    var email: String? = null,
 
+//    @get:Bindable
     @field:SerializedName("hasRegistered")
-    val hasRegistered: Boolean? = null
-)
+    var hasRegistered: Boolean? = null
+) //: BaseObservable()

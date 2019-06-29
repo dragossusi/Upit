@@ -8,6 +8,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import ro.rachieru.dragos.base.Presenter
 import ro.rachierudragos.upitapi.UpitApi
+import ro.rachierudragos.upitapi.entities.response.CallRequest
 
 
 /**
@@ -48,7 +49,7 @@ class VideoCallPresenter(
     fun startVideoCall(context: Context, callerId: Int, calledId: String) {
         doIfHasInternet(
             context,
-            api.callUser(calledId)
+            api.callUser(CallRequest(calledId))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -64,7 +65,7 @@ class VideoCallPresenter(
     fun cancelVideoCall(context: Context, callerId: String, calledId: String) {
         doIfHasInternet(
             context,
-            api.cancelCall(callerId)
+            api.cancelCall(CallRequest(calledId))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

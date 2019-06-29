@@ -20,27 +20,19 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.MANAGE_OWN_CALLS" />
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
-
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.BLUETOOTH" />
 
     <application
         android:name=".app.UpitApp"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
+        android:supportsRtl="false"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
-        tools:replace="android:allowBackup,android:icon">
+        tools:replace="android:supportsRtl,android:allowBackup">
 
         <service
             android:name=".service.MyFirebaseMessagingService"
@@ -60,13 +52,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".screens.SplashActivity" />
-        <!--<activity android:name=".screens.authentification.login.view.LoginActivity" />-->
         <activity android:name=".screens.activities.auth.view.AuthActivity" />
-        <activity android:name="ro.rachieru.dragos.upit.screens.fragments.news.details.NewsDetailsActivity" />
+        <activity android:name="ro.rachieru.dragos.upit.screens.activities.news.details.NewsDetailsActivity" />
+        <activity android:name=".screens.activities.job.JobDetailsActivity" />
+        <activity android:name=".screens.myprofile.MyProfileActivity" />
         <activity android:name=".call.CalledByUserActivity" />
 
         <activity
-            android:name="org.appspot.apprtc.ConnectActivity"
+            android:name="ro.rachieru.dragos.videocall.ConnectActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustPan">
 
@@ -75,6 +68,13 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="amiss-25454.appspot.com"
+                    android:scheme="https" />
+                <data
+                    android:host="amiss-25454.appspot.com"
+                    android:scheme="http" />
 
                 <data
                     android:host="appr.tc"
@@ -86,16 +86,16 @@
         </activity>
 
         <activity
-            android:name="org.appspot.apprtc.SettingsActivity"
-            android:label="@string/settings_name"></activity>
+            android:name="ro.rachieru.dragos.videocall.SettingsActivity"
+            android:label="@string/settings_name"
+            android:theme="@style/AppTheme" />
 
         <activity
-            android:name="org.appspot.apprtc.CallActivity"
-            android:configChanges="orientation|screenSize"
+            android:name="ro.rachieru.dragos.videocall.CallActivity"
+            android:configChanges="orientation|smallestScreenSize|screenSize|screenLayout"
             android:label="@string/app_name"
             android:screenOrientation="fullUser"
-            android:theme="@style/CallActivityTheme"></activity>
-        <activity android:name=".screens.activities.job.JobDetailsActivity" />
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

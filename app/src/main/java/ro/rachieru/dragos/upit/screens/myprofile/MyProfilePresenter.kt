@@ -12,7 +12,7 @@ import ro.rachierudragos.upitapi.UpitApi
  * @since 09.06.2019
  */
 class MyProfilePresenter(val api: UpitApi,
-                         val viewDelegate: MyProfileFragment) : Presenter() {
+                         val viewDelegate: MyProfileActivity) : Presenter() {
 
     fun getDetails() {
         add(

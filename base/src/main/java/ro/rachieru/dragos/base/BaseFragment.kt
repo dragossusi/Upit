@@ -1,12 +1,10 @@
 package ro.rachieru.dragos.base
 
 import android.content.Context
-import androidx.fragment.app.Fragment
 import android.widget.Toast
 import org.koin.android.ext.android.inject
 import ro.rachieru.dragos.base.saving.LocalSaving
 import ro.rachierudragos.upitapi.UpitApi
-import ro.rachierudragos.upitapi.UpitApiNode
 
 abstract class BaseFragment<P : IPresenter> : androidx.fragment.app.Fragment(), ViewDelegate {
 
@@ -17,7 +15,7 @@ abstract class BaseFragment<P : IPresenter> : androidx.fragment.app.Fragment(), 
     protected lateinit var presenter: P
         private set
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         presenter = initPresenter(api)
     }

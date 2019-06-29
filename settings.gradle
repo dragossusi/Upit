@@ -1,1 +1,1 @@
-include ':app', ':upitapi', ':videocall', ':base'
+include ':app', ':upitapi', ':base', ':videocall'

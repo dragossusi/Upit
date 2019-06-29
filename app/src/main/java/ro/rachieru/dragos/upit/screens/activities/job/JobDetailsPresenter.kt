@@ -10,6 +10,7 @@ import io.reactivex.schedulers.Schedulers
 import ro.rachieru.dragos.base.Presenter
 import ro.rachieru.dragos.upit.R
 import ro.rachierudragos.upitapi.UpitApi
+import ro.rachierudragos.upitapi.entities.response.CallRequest
 
 /**
  * Upit
@@ -22,7 +23,7 @@ class JobDetailsPresenter(
     val viewDelegate: JobDetailsActivity
 ) : Presenter() {
 
-    fun getDetails(context: Context, jobId: String) {
+    fun getDetails(context: Context, jobId: Int) {
         doIfHasInternet(
             context,
             api.getJobDetails(jobId)
@@ -68,7 +69,7 @@ class JobDetailsPresenter(
     fun startVideoCall(context: Context, calledId: String) {
         doIfHasInternet(
             context,
-            api.callUser(calledId)
+            api.callUser(CallRequest(calledId))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -97,7 +98,7 @@ class JobDetailsPresenter(
     fun cancelVideoCall(context: Context, callerId: Int, calledId: String) {
         doIfHasInternet(
             context,
-            d = api.cancelCall(calledId)
+            d = api.cancelCall(CallRequest(calledId))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

@@ -2,6 +2,7 @@ package ro.rachierudragos.upitapi.entities.response
 
 import com.google.gson.annotations.SerializedName
 
+@Deprecated("not used")
 class UserDetails(
 
     @field:SerializedName("password")

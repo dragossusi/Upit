@@ -21,4 +21,9 @@
     <string name="jobs">Jobs</string>
     <string name="my_profile">My profile</string>
     <string name="phone">Phone</string>
+    <string name="job_description">Job description</string>
+    <string name="company_description">Company description</string>
+    <string name="apply">Apply</string>
+    <string name="last_name">Last name</string>
+    <string name="first_name">First name</string>
 </resources>

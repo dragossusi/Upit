@@ -18,10 +18,10 @@ import ro.rachieru.dragos.upit.R
 import ro.rachieru.dragos.upit.databinding.ActivityMainBinding
 import ro.rachieru.dragos.upit.screens.activities.auth.view.AuthActivity
 import ro.rachieru.dragos.upit.screens.fragments.jobs.JobsFragment
-import ro.rachieru.dragos.upit.screens.fragments.news.view.NewsFragment
+import ro.rachieru.dragos.upit.screens.activities.news.view.NewsFragment
 import ro.rachieru.dragos.upit.screens.main.presenter.IMainPresenter
 import ro.rachieru.dragos.upit.screens.main.presenter.MainPresenter
-import ro.rachieru.dragos.upit.screens.myprofile.MyProfileFragment
+import ro.rachieru.dragos.upit.screens.myprofile.MyProfileActivity
 import ro.rachierudragos.upitapi.UpitApi
 import ro.rachierudragos.upitapi.UserDetails
 
@@ -104,9 +104,7 @@ class MainActivity : BaseActivity<IMainPresenter>(), NavigationView.OnNavigation
                     .commit()
             }
             R.id.nav_my_profile -> {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragments_view, MyProfileFragment())
-                    .commit()
+                startActivity(Intent(this, MyProfileActivity::class.java))
             }
             R.id.nav_logout -> {
                 startActivity(Intent(this, AuthActivity::class.java))

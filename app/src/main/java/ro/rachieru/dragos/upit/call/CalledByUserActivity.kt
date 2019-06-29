@@ -19,9 +19,9 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.ActivityCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
-import org.appspot.apprtc.CallActivity
 import ro.rachieru.dragos.base.BaseActivity
 import ro.rachieru.dragos.upit.R
+import ro.rachieru.dragos.videocall.CallActivity
 import ro.rachierudragos.upitapi.UpitApi
 import ro.rachierudragos.upitapi.entities.response.CallResponse
 import ro.rachierudragos.upitapi.entities.response.VideoCallBroadcastManager
@@ -109,7 +109,7 @@ class CalledByUserActivity : BaseActivity<VideoCallPresenter>(), View.OnClickLis
 
         val uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE)
         mRingtone = RingtoneManager.getRingtone(this, uri)
-        mRingtone!!.play()
+        mRingtone?.play()
 
         val pm = getSystemService(Context.POWER_SERVICE) as PowerManager?
         if (pm != null) {
@@ -271,22 +271,20 @@ class CalledByUserActivity : BaseActivity<VideoCallPresenter>(), View.OnClickLis
 
     private fun connect() {
         finishAffinity()
-        CallActivity.connectToRoom(this, mChatRoom!!, false, true, mName!!, mAvatar)
+        CallActivity.connectToRoom(this, mChatRoom!!, false, true,0/*, mName!!, mAvatar*/)
     }
 
     private fun stop() {
         if (mWakeLock != null && mWakeLock!!.isHeld) {
             mWakeLock!!.release()
         }
-        if (mRingtone != null && mRingtone!!.isPlaying) {
-            mRingtone!!.stop()
+        mRingtone?.run {
+            if (isPlaying) {
+                stop()
+            }
         }
-        if (mTimer != null) {
-            mTimer!!.cancel()
-        }
-        if (mVibrator != null) {
-            mVibrator!!.cancel()
-        }
+        mTimer?.cancel()
+        mVibrator?.cancel()
     }
 
 }

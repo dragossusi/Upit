@@ -9,11 +9,11 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import kotlinx.android.synthetic.main.activity_job_details.*
-import org.appspot.apprtc.CallActivity
 import ro.rachieru.dragos.base.BaseActivity
 import ro.rachieru.dragos.base.ProgressViewDelegate
 import ro.rachieru.dragos.upit.R
 import ro.rachieru.dragos.upit.utils.BUNDLE_RESOURCE_ID
+import ro.rachieru.dragos.videocall.CallActivity
 import ro.rachierudragos.upitapi.UpitApi
 import ro.rachierudragos.upitapi.entities.response.CallResponse
 import ro.rachierudragos.upitapi.entities.response.JobsResponse
@@ -29,7 +29,7 @@ class JobDetailsActivity : BaseActivity<JobDetailsPresenter>(), ProgressViewDele
     private val VIDEO_CALL_REQUEST_CODE = 2
     private val STORAGE_REQUEST_CODE = 1
 
-    private lateinit var jobId: String
+    private var jobId: Int = 0
     private var _jobDetails: JobsResponse? = null
     private lateinit var callButton: MenuItem
 
@@ -39,7 +39,7 @@ class JobDetailsActivity : BaseActivity<JobDetailsPresenter>(), ProgressViewDele
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        jobId = intent.getStringExtra(BUNDLE_RESOURCE_ID)
+        jobId = intent.getIntExtra(BUNDLE_RESOURCE_ID,0)
         setContentView(R.layout.activity_job_details)
         setSupportActionBar(toolbar)
     }
@@ -106,8 +106,9 @@ class JobDetailsActivity : BaseActivity<JobDetailsPresenter>(), ProgressViewDele
             data.chatRoom!!,
             true,
             false,
-            user.name!!,
-            user.avatarPath
+            0
+//            user.name!!,
+//            user.avatarPath
         )
     }
 
