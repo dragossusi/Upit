@@ -11,9 +11,11 @@ class LocalSaving(private val context: Context) : TokenSaving {
     val gson = Gson()
 
     val preferences: SharedPreferences
+    val userListeners: MutableMap<String, OnUserChanged>
 
     init {
         preferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+        userListeners = HashMap()
     }
 
     override var token: String?
@@ -52,6 +54,14 @@ class LocalSaving(private val context: Context) : TokenSaving {
                 .apply()
         }
 
+    fun addOnUserChangedListener(tag: String, listener: OnUserChanged) {
+        userListeners.put(tag, listener)
+    }
+
+    fun removeOnUserChangedListener(tag: String) {
+        userListeners.remove(tag)
+    }
+
     companion object {
         private const val SHARED_PREF_NAME = "local-saving"
 
@@ -61,3 +71,5 @@ class LocalSaving(private val context: Context) : TokenSaving {
     }
 
 }
+
+typealias OnUserChanged = ((UserDetails) -> Unit)

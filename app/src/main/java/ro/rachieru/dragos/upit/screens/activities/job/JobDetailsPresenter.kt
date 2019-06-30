@@ -83,7 +83,7 @@ class JobDetailsPresenter(
                         "not_found" -> {
                             viewDelegate.onVideoCallError(context.getString(R.string.error_user_not_found))
                         }
-                        else -> viewDelegate.onError(Throwable())
+                        else -> viewDelegate.onError(Throwable(it.message))
                     }
                 }, { throwable ->
                     viewDelegate.hideProgressVideoCall()

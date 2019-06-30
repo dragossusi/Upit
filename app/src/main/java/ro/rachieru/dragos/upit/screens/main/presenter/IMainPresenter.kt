@@ -5,4 +5,5 @@ import ro.rachieru.dragos.base.IPresenter
 
 interface IMainPresenter : IPresenter {
     fun getMyUserDetails(context: Context)
+    fun logout(context: Context)
 }

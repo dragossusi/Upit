@@ -14,6 +14,7 @@
     <string name="email">Email</string>
     <string name="name">Name</string>
     <string name="change_cv">Change CV</string>
+    <string name="upload_cv">Upload CV</string>
     <string name="video_call_is_calling">%s is calling you</string>
     <string name="call">Call</string>
     <string name="error_user_no_devices">User has no devices to call</string>
@@ -26,4 +27,13 @@
     <string name="apply">Apply</string>
     <string name="last_name">Last name</string>
     <string name="first_name">First name</string>
+    <string name="pick_image">Pick Image</string>
+    <string name="view_image">View image</string>
+    <string name="view_cv">View CV</string>
+    <string name="choose_cv">Choose CV</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="no_company_description">No company description</string>
+    <string name="no_job_description">No job description</string>
+    <string name="just_a_moment">Just a moment</string>
+    <string name="change_pass">Change password</string>
 </resources>

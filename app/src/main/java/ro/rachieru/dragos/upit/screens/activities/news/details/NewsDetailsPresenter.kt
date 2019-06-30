@@ -18,15 +18,15 @@ class NewsDetailsPresenter(
 ) : Presenter() {
 
     fun getNewsDetails(context: Context, newsId: Int) {
-        doIfHasInternet(
-            context,
-            api.getNewsDetails(eventId = newsId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(viewDelegate::onNewsDetails, viewDelegate::onError),
-            onStart = viewDelegate::showProgress,
-            onNoInternet = viewDelegate::onNoInternetConnection
-        )
+//        doIfHasInternet( todo
+//            context,
+//            api.getNewsDetails(eventId = newsId)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(viewDelegate::onNewsDetails, viewDelegate::onError),
+//            onStart = viewDelegate::showProgress,
+//            onNoInternet = viewDelegate::onNoInternetConnection
+//        )
     }
 
 }

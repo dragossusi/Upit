@@ -7,8 +7,6 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_job.view.*
 import ro.rachieru.dragos.base.extensions.inflate
 import ro.rachieru.dragos.upit.R
-import ro.rachieru.dragos.upit.app.HOST
-import ro.rachierudragos.upitapi.entities.response.JobsResponse
 import ro.rachierudragos.upitapi.entities.response.OfferResponse
 
 /**

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">77.81.104.130</domain>
+        <domain includeSubdomains="true">77.81.104.130:8082</domain>
+        <domain includeSubdomains="true">http://77.81.104.130:8082</domain>
+        <domain includeSubdomains="true">http://77.81.104.130</domain>
+    </domain-config>
+    <base-config>
+        <trust-anchors>
+            <certificates src="@raw/cert"/>
+        </trust-anchors>
+    </base-config>
+</network-security-config>

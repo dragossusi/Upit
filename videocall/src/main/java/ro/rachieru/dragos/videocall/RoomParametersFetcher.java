@@ -195,6 +195,7 @@ public class RoomParametersFetcher {
                         PeerConnection.IceServer.builder(turnUrl)
                                 .setUsername(username)
                                 .setPassword(credential)
+                                .setTlsCertPolicy(PeerConnection.TlsCertPolicy.TLS_CERT_POLICY_INSECURE_NO_CHECK)
                                 .createIceServer();
                 turnServers.add(turnServer);
             }

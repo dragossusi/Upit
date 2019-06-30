@@ -30,5 +30,11 @@ class UserDetails(
 
 //    @get:Bindable
     @field:SerializedName("hasRegistered")
-    var hasRegistered: Boolean? = null
+    var hasRegistered: Boolean? = null,
+
+    @field:SerializedName("cvName")
+    var cvName: String? = null,
+
+    @field:SerializedName("cvPath")
+    var cvPath: String? = null
 ) //: BaseObservable()

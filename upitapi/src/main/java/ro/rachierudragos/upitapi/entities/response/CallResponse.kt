@@ -18,5 +18,5 @@ class CallResponse(
 
 ) {
     val isSuccess: Boolean
-        get() = status != null && status == "success"
+        get() = status != null && status == "Success"
 }

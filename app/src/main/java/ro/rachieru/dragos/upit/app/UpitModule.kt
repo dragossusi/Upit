@@ -15,4 +15,3 @@ val upitModule = module {
 }
 
 //const val HOST = "http://teamp.go.ro:3000"
-const val HOST = "http://77.81.104.130:8082"

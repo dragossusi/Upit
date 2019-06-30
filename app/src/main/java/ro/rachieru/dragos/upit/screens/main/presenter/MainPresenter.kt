@@ -21,4 +21,20 @@ class MainPresenter(
         )
     }
 
+    override fun logout(context: Context) {
+        doIfHasInternet(
+            context,
+            api.logout()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    viewDelegate.hideProgress()
+                    viewDelegate.onLogout()
+                }) {
+                    viewDelegate.hideProgress()
+                    viewDelegate.onError(it)
+                },
+            onStart = viewDelegate::showProgress,
+            onNoInternet = viewDelegate::onNoInternetConnection
+        )
+    }
 }

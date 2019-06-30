@@ -16,18 +16,20 @@ class NewsPresenter(
     val viewDelegate: NewsFragment
 ) : Presenter() {
 
-    fun getNews(context: Context, start: String? = null) {
+    fun getNews(context: Context, start: Int = 0) {
         doIfHasInternet(
             context,
             api.getNews(start)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     viewDelegate.hideProgress()
-                    viewDelegate.onItems(it, start == null)
+                    viewDelegate.onItems(it.news ?: ArrayList(), start == 0)
                 }, {
                     viewDelegate.hideProgress()
                     viewDelegate.onError(it)
-                }), viewDelegate::hideProgress, viewDelegate::onNoInternetConnection
+                }),
+            onStart = viewDelegate::hideProgress,
+            onNoInternet = viewDelegate::onNoInternetConnection
         )
     }
 

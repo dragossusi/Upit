@@ -10,106 +10,98 @@
 
 package ro.rachieru.dragos.videocall.util;
 
+import androidx.annotation.Nullable;
+import okhttp3.*;
+import ro.rachierudragos.upitapi.OkHttpClientHelperKt;
+
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
-import java.net.URL;
-import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Asynchronous http requests implementation.
  */
 public class AsyncHttpURLConnection {
-  private static final int HTTP_TIMEOUT_MS = 8000;
-//  private static final String HTTP_ORIGIN = "https://appr.tc";
-  private static final String HTTP_ORIGIN = "https://amiss-25454.appspot.com";
-  private final String method;
-  private final String url;
-  private final String message;
-  private final AsyncHttpEvents events;
-  private String contentType;
+    private static final int HTTP_TIMEOUT_MS = 8000;
+    //  private static final String HTTP_ORIGIN = "https://appr.tc";
+    private static final String HTTP_ORIGIN = "https://amiss-25454.appspot.com";
+    private final String method;
+    private final String url;
+    private final String message;
+    private final AsyncHttpEvents events;
+    @Nullable
+    private String contentType;
+    private OkHttpClient client;
 
-  /**
-   * Http requests callbacks.
-   */
-  public interface AsyncHttpEvents {
-    void onHttpError(String errorMessage);
-    void onHttpComplete(String response);
-  }
+    /**
+     * Http requests callbacks.
+     */
+    public interface AsyncHttpEvents {
+        void onHttpError(String errorMessage);
 
-  public AsyncHttpURLConnection(String method, String url, String message, AsyncHttpEvents events) {
-    this.method = method;
-    this.url = url;
-    this.message = message;
-    this.events = events;
-  }
-
-  public void setContentType(String contentType) {
-    this.contentType = contentType;
-  }
-
-  public void send() {
-    new Thread(this ::sendHttpMessage).start();
-  }
-
-  private void sendHttpMessage() {
-    try {
-      HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
-      byte[] postData = new byte[0];
-      if (message != null) {
-        postData = message.getBytes("UTF-8");
-      }
-      connection.setRequestMethod(method);
-      connection.setUseCaches(false);
-      connection.setDoInput(true);
-      connection.setConnectTimeout(HTTP_TIMEOUT_MS);
-      connection.setReadTimeout(HTTP_TIMEOUT_MS);
-      // TODO(glaznev) - query request origin from pref_room_server_url_key preferences.
-      connection.addRequestProperty("origin", HTTP_ORIGIN);
-      boolean doOutput = false;
-      if (method.equals("POST")) {
-        doOutput = true;
-        connection.setDoOutput(true);
-        connection.setFixedLengthStreamingMode(postData.length);
-      }
-      if (contentType == null) {
-        connection.setRequestProperty("Content-Type", "text/plain; charset=utf-8");
-      } else {
-        connection.setRequestProperty("Content-Type", contentType);
-      }
-
-      // Send POST request.
-      if (doOutput && postData.length > 0) {
-        OutputStream outStream = connection.getOutputStream();
-        outStream.write(postData);
-        outStream.close();
-      }
-
-      // Get response.
-      int responseCode = connection.getResponseCode();
-      if (responseCode != 200) {
-        events.onHttpError("Non-200 response to " + method + " to URL: " + url + " : "
-            + connection.getHeaderField(null));
-        connection.disconnect();
-        return;
-      }
-      InputStream responseStream = connection.getInputStream();
-      String response = drainStream(responseStream);
-      responseStream.close();
-      connection.disconnect();
-      events.onHttpComplete(response);
-    } catch (SocketTimeoutException e) {
-      events.onHttpError("HTTP " + method + " to " + url + " timeout");
-    } catch (IOException e) {
-      events.onHttpError("HTTP " + method + " to " + url + " error: " + e.getMessage());
+        void onHttpComplete(String response);
     }
-  }
 
-  // Return the contents of an InputStream as a String.
-  private static String drainStream(InputStream in) {
-    Scanner s = new Scanner(in, "UTF-8").useDelimiter("\\A");
-    return s.hasNext() ? s.next() : "";
-  }
+    public AsyncHttpURLConnection(String method, String url, String message, AsyncHttpEvents events) {
+        this.method = method;
+        this.url = url;
+        this.message = message;
+        this.events = events;
+        client = OkHttpClientHelperKt.getUnsafeOkHttpClientBuilder()
+                .connectTimeout(HTTP_TIMEOUT_MS, TimeUnit.MILLISECONDS)
+                .readTimeout(HTTP_TIMEOUT_MS, TimeUnit.MILLISECONDS)
+                .build();
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
+    public void send() {
+        new Thread(this::sendHttpMessage).start();
+    }
+
+    private void sendHttpMessage() {
+        RequestBody body;
+        String mediaType;
+        if (contentType == null) {
+            mediaType = "text/plain; charset=utf-8";
+        } else {
+            mediaType = contentType;
+        }
+        if (message != null) {
+            body = RequestBody.create(MediaType.parse(mediaType), message);
+        } else {
+            body = RequestBody.create(MediaType.parse(mediaType), new byte[0]);
+        }
+        Request.Builder requestBuilder = new Request.Builder()
+                .url(url)
+                .method(method, body)
+                .addHeader("origin", HTTP_ORIGIN);
+//            connection.setUseCaches(false);
+        // TODO(glaznev) - query request origin from pref_room_server_url_key preferences.
+
+        client.newCall(requestBuilder.build()).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                if (e instanceof SocketTimeoutException) {
+                    events.onHttpError("HTTP " + method + " to " + url + " timeout");
+                } else
+                    events.onHttpError("HTTP " + method + " to " + url + " error: " + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                // Get response.
+                int responseCode = response.code();
+                if (responseCode != 200) {
+                    events.onHttpError("Non-200 response to " + method + " to URL: " + url + " : "
+                            + response.headers());
+                    return;
+                }
+                events.onHttpComplete(response.body().string());
+            }
+        });
+    }
+
 }

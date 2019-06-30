@@ -8,15 +8,18 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.databinding.DataBindingUtil
 import kotlinx.android.synthetic.main.activity_job_details.*
 import ro.rachieru.dragos.base.BaseActivity
 import ro.rachieru.dragos.base.ProgressViewDelegate
 import ro.rachieru.dragos.upit.R
+import ro.rachieru.dragos.upit.databinding.ActivityJobDetailsBinding
 import ro.rachieru.dragos.upit.utils.BUNDLE_RESOURCE_ID
 import ro.rachieru.dragos.videocall.CallActivity
 import ro.rachierudragos.upitapi.UpitApi
 import ro.rachierudragos.upitapi.entities.response.CallResponse
 import ro.rachierudragos.upitapi.entities.response.JobsResponse
+import ro.rachierudragos.upitapi.entities.response.OfferResponse
 
 /**
  * Upit
@@ -30,7 +33,7 @@ class JobDetailsActivity : BaseActivity<JobDetailsPresenter>(), ProgressViewDele
     private val STORAGE_REQUEST_CODE = 1
 
     private var jobId: Int = 0
-    private var _jobDetails: JobsResponse? = null
+    private lateinit var _binding: ActivityJobDetailsBinding
     private lateinit var callButton: MenuItem
 
     override fun initPresenter(api: UpitApi): JobDetailsPresenter {
@@ -39,9 +42,10 @@ class JobDetailsActivity : BaseActivity<JobDetailsPresenter>(), ProgressViewDele
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        jobId = intent.getIntExtra(BUNDLE_RESOURCE_ID,0)
-        setContentView(R.layout.activity_job_details)
-        setSupportActionBar(toolbar)
+        jobId = intent.getIntExtra(BUNDLE_RESOURCE_ID, 0)
+        _binding = DataBindingUtil.setContentView(this, R.layout.activity_job_details)
+        setSupportActionBar(_binding.toolbar)
+        presenter.getDetails(this, jobId)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -66,7 +70,7 @@ class JobDetailsActivity : BaseActivity<JobDetailsPresenter>(), ProgressViewDele
     }
 
     fun onVideoCallPermissionAvailable() {
-        presenter.startVideoCall(this, _jobDetails!!.userId!!)
+        presenter.startVideoCall(this, _binding.job!!.createdBy!!)
     }
 
     fun onVideoCallRequestPermissions() {
@@ -92,7 +96,7 @@ class JobDetailsActivity : BaseActivity<JobDetailsPresenter>(), ProgressViewDele
 //                presenter.getFiles(mChatRoomViewEntity.getId())
 //            }
             if (requestCode == VIDEO_CALL_REQUEST_CODE) {
-                presenter.startVideoCall(this, _jobDetails!!.userId!!)
+                presenter.startVideoCall(this, _binding.job!!.createdBy!!)
             }
         } else {
             Toast.makeText(this, "Please grant permissions", Toast.LENGTH_LONG).show()
@@ -100,7 +104,7 @@ class JobDetailsActivity : BaseActivity<JobDetailsPresenter>(), ProgressViewDele
     }
 
     fun onVideoCallCanStart(data: CallResponse) {
-        val user = data.user!!
+//        val user = data.user!!
         CallActivity.connectToRoom(
             this,
             data.chatRoom!!,
@@ -120,9 +124,11 @@ class JobDetailsActivity : BaseActivity<JobDetailsPresenter>(), ProgressViewDele
         onError(Throwable(message))
     }
 
-    fun onJobDetails(it: JobsResponse) {
-        _jobDetails = it
+    fun onJobDetails(it: OfferResponse) {
+        _binding.job = it
         supportActionBar!!.title = it.title
+        _binding.toolbar.title = it.title
+        _binding.collapse.title = it.title
     }
 
     override fun showProgress() {

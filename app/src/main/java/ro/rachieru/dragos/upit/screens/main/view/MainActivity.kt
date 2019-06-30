@@ -1,5 +1,6 @@
 package ro.rachieru.dragos.upit.screens.main.view
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -30,6 +31,8 @@ class MainActivity : BaseActivity<IMainPresenter>(), NavigationView.OnNavigation
 
     private lateinit var _binding: ActivityMainBinding
 
+    private var progressDialog: ProgressDialog? = null
+
     override fun initPresenter(api: UpitApi): IMainPresenter {
         return MainPresenter(api, this)
     }
@@ -44,6 +47,15 @@ class MainActivity : BaseActivity<IMainPresenter>(), NavigationView.OnNavigation
 
         setContentView(R.layout.loading_placeholder)
         presenter.getMyUserDetails(this)
+        localSaving.addOnUserChangedListener("MainActivity") { user ->
+            _binding.navView.getHeaderView(0).let {
+                Glide.with(this)
+                    .load(user.profilePic)
+                    .into(it.image_user)
+                it.text_user_name.text = user.fullName
+                it.text_user_email.text = user.email
+            }
+        }
     }
 
     fun onUserDetails(user: UserDetails) {
@@ -63,23 +75,21 @@ class MainActivity : BaseActivity<IMainPresenter>(), NavigationView.OnNavigation
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
-        nav_view.getHeaderView(0).let {
-            Glide.with(this)
-                .load(user.profilePic)
-                .into(it.image_user)
-            it.text_user_name.text = user.fullName
-            it.text_user_email.text = user.email
-        }
-
         nav_view.setNavigationItemSelectedListener(this)
     }
 
     override fun showProgress() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        progressDialog = ProgressDialog.show(
+            this,
+            getString(R.string.logout),
+            getString(R.string.just_a_moment),
+            true,
+            false
+        )
     }
 
     override fun hideProgress() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        progressDialog?.dismiss()
     }
 
     override fun onBackPressed() {
@@ -107,8 +117,7 @@ class MainActivity : BaseActivity<IMainPresenter>(), NavigationView.OnNavigation
                 startActivity(Intent(this, MyProfileActivity::class.java))
             }
             R.id.nav_logout -> {
-                startActivity(Intent(this, AuthActivity::class.java))
-                finish()
+                presenter.logout(this)
             }
         }
 
@@ -129,4 +138,15 @@ class MainActivity : BaseActivity<IMainPresenter>(), NavigationView.OnNavigation
             finish()
         }
     }
+
+    fun onLogout() {
+        startActivity(Intent(this, AuthActivity::class.java))
+        finish()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        localSaving.removeOnUserChangedListener("MainActivity")
+    }
+
 }

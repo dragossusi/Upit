@@ -24,7 +24,12 @@ class LoginPresenter(
                 .flatMap { api.login(email, password, it) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(viewDelegate::onLoginSuccess, viewDelegate::onError),
+                .subscribe({
+                    viewDelegate.hideProgress()
+                    if (it.accessToken.isNullOrEmpty())
+                        viewDelegate.onError(Throwable())
+                    else viewDelegate.onLoginSuccess(it)
+                }, viewDelegate::onError),
             onStart = viewDelegate::showProgress,
             onNoInternet = viewDelegate::onNoInternetConnection
         )
