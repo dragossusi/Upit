@@ -13,6 +13,10 @@ import ro.rachierudragos.upitapi.entities.response.NewsResponse
  */
 class NewsFragment : RefreshListFragment<NewsResponse, NewsPresenter>() {
 
+    override fun onLoadMore(page: Int, totalItemsCount: Int) {
+        presenter.getNews(requireContext(),totalItemsCount)
+    }
+
     override val adapter = NewsAdapter()
 
     override fun initPresenter(api: UpitApi): NewsPresenter {

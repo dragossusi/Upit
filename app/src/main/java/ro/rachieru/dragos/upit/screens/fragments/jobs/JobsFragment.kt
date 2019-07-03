@@ -17,6 +17,10 @@ import ro.rachierudragos.upitapi.entities.response.OfferResponse
  */
 class JobsFragment : RefreshListFragment<OfferResponse, JobsPresenter>() {
 
+    override fun onLoadMore(page: Int, totalItemsCount: Int) {
+        presenter.getJobs(requireContext(), totalItemsCount)
+    }
+
     override val adapter = JobsAdapter {
         startActivity(Intent(requireContext(), JobDetailsActivity::class.java).putExtra(BUNDLE_RESOURCE_ID, it.offerID))
     }

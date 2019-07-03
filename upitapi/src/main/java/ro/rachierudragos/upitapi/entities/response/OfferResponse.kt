@@ -6,7 +6,7 @@ import ro.rachierudragos.upitapi.entities.enums.ApplianceStatus
 class OfferResponse(
 
     @field:SerializedName("documents")
-    val documents: List<DocumentResponse?>? = null,
+    val documents: List<DocumentResponse>? = null,
 
     @field:SerializedName("_links")
     val links: List<Any?>? = null,

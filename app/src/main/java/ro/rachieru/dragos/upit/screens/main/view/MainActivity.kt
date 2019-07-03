@@ -10,7 +10,6 @@ import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 import ro.rachieru.dragos.base.BaseActivity
@@ -51,6 +50,7 @@ class MainActivity : BaseActivity<IMainPresenter>(), NavigationView.OnNavigation
             _binding.navView.getHeaderView(0).let {
                 Glide.with(this)
                     .load(user.profilePic)
+                    .circleCrop()
                     .into(it.image_user)
                 it.text_user_name.text = user.fullName
                 it.text_user_email.text = user.email
@@ -62,20 +62,18 @@ class MainActivity : BaseActivity<IMainPresenter>(), NavigationView.OnNavigation
         _binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Nu stiu daca ne trebuie asta", Snackbar.LENGTH_LONG)
-                .setAction("???", null).show()
-        }
-
         val toggle = ActionBarDrawerToggle(
-            this, drawer_layout, toolbar,
+            this, _binding.drawerLayout, toolbar,
             R.string.navigation_drawer_open,
             R.string.navigation_drawer_close
         )
-        drawer_layout.addDrawerListener(toggle)
+        _binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        nav_view.setNavigationItemSelectedListener(this)
+        _binding.navView.setNavigationItemSelectedListener(this)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragments_view, NewsFragment())
+            .commit()
     }
 
     override fun showProgress() {
@@ -93,8 +91,8 @@ class MainActivity : BaseActivity<IMainPresenter>(), NavigationView.OnNavigation
     }
 
     override fun onBackPressed() {
-        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
-            drawer_layout.closeDrawer(GravityCompat.START)
+        if (_binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            _binding.drawerLayout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
         }
@@ -121,7 +119,7 @@ class MainActivity : BaseActivity<IMainPresenter>(), NavigationView.OnNavigation
             }
         }
 
-        drawer_layout.closeDrawer(GravityCompat.START)
+        _binding.drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
 

@@ -15,6 +15,7 @@
     <string name="email">Email</string>
     <string name="name">Nume</string>
     <string name="change_cv">Schimbă CV</string>
+    <string name="upload_cv">Încarcă CV</string>
     <string name="video_call_is_calling">%s te apelează</string>
     <string name="call">Apelează</string>
     <string name="error_user_no_devices">Utilizatorul nu are niciun device pentru a fi apelat</string>
@@ -22,4 +23,18 @@
     <string name="jobs">Joburi</string>
     <string name="my_profile">Profilul meu</string>
     <string name="phone">Telefon</string>
+    <string name="job_description">Descrierea jobului</string>
+    <string name="company_description">Descrierea companiei</string>
+    <string name="apply">Aplică</string>
+    <string name="last_name">Nume</string>
+    <string name="first_name">Prenume</string>
+    <string name="pick_image">Alege imagine</string>
+    <string name="view_image">Vizualizare imaginea</string>
+    <string name="view_cv">Vizualizare CV</string>
+    <string name="choose_cv">Alege CV</string>
+    <string name="edit_profile">Editare Profil</string>
+    <string name="no_company_description">Nicio descriere a companiei</string>
+    <string name="no_job_description">Nicio descriere a jobului</string>
+    <string name="just_a_moment">Doar un moment</string>
+    <string name="change_pass">Schimbare parola</string>
 </resources>

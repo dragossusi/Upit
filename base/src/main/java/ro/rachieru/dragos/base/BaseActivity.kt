@@ -3,13 +3,12 @@ package ro.rachieru.dragos.base
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
 import ro.rachieru.dragos.base.saving.LocalSaving
 import ro.rachierudragos.upitapi.UpitApi
 
 abstract class BaseActivity<P : IPresenter> : AppCompatActivity(), ViewDelegate {
-
-    val api: UpitApi by inject()
 
     val localSaving: LocalSaving by inject()
 
@@ -20,7 +19,7 @@ abstract class BaseActivity<P : IPresenter> : AppCompatActivity(), ViewDelegate 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = initPresenter(api)
+        presenter = initPresenter(get())
     }
 
     override fun onError(e: Throwable) {

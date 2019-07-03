@@ -259,7 +259,7 @@ class CalledByUserActivity : BaseActivity<VideoCallPresenter>(), View.OnClickLis
     }
 
     fun onVideoCallError(error: String) {
-        presenter.cancelVideoCall(this, mSendingUserId!!, mReceivingUserId!!)
+        presenter.cancelVideoCall(this, mSendingUserId, mReceivingUserId)
     }
 
     private fun initView() {

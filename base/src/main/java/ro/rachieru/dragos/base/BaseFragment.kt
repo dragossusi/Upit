@@ -2,13 +2,13 @@ package ro.rachieru.dragos.base
 
 import android.content.Context
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
 import ro.rachieru.dragos.base.saving.LocalSaving
 import ro.rachierudragos.upitapi.UpitApi
 
-abstract class BaseFragment<P : IPresenter> : androidx.fragment.app.Fragment(), ViewDelegate {
-
-    protected val api: UpitApi by inject()
+abstract class BaseFragment<P : IPresenter> : Fragment(), ViewDelegate {
 
     protected val localSaving: LocalSaving by inject()
 
@@ -17,7 +17,7 @@ abstract class BaseFragment<P : IPresenter> : androidx.fragment.app.Fragment(), 
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        presenter = initPresenter(api)
+        presenter = initPresenter(get())
     }
 
     override fun onPause() {

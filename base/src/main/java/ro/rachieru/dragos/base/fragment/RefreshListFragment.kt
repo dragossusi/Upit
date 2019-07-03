@@ -1,18 +1,18 @@
 package ro.rachieru.dragos.base.fragment
 
 import android.os.Bundle
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import ro.rachieru.dragos.base.BaseFragment
 import ro.rachieru.dragos.base.IPresenter
 import ro.rachieru.dragos.base.ProgressViewDelegate
 import ro.rachieru.dragos.base.R
 import ro.rachieru.dragos.base.adapter.ListRecyclerAdapter
-import ro.rachierudragos.upitapi.entities.response.JobsResponse
+import ro.rachierudragos.upitapi.EndlessRecyclerViewScrollListener
 
 /**
  * Upit
@@ -22,7 +22,7 @@ import ro.rachierudragos.upitapi.entities.response.JobsResponse
  */
 abstract class RefreshListFragment<T, P : IPresenter> : BaseFragment<P>(),
     ProgressViewDelegate,
-    androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
+    SwipeRefreshLayout.OnRefreshListener {
 
     protected abstract val adapter: ListRecyclerAdapter<T, *>
 
@@ -40,10 +40,18 @@ abstract class RefreshListFragment<T, P : IPresenter> : BaseFragment<P>(),
         super.onViewCreated(view, savedInstanceState)
         swipeRefresh!!.setOnRefreshListener(this)
         recyclerView!!.let {
-            it.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext())
+            val manager = LinearLayoutManager(requireContext())
+            it.layoutManager = manager
+            it.addOnScrollListener(object : EndlessRecyclerViewScrollListener(manager) {
+                override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
+                    this@RefreshListFragment.onLoadMore(page, totalItemsCount)
+                }
+            })
             it.adapter = adapter
         }
     }
+
+    abstract fun onLoadMore(page: Int, totalItemsCount: Int)
 
     fun onItems(items: Collection<T>, refresh: Boolean) {
         if (refresh) {

@@ -29,24 +29,17 @@ interface UpitApi {
     @GET("api/offers")
     fun getJobs(
         @Query("skip") skip: Int = 0,
-        @Query("take") limit: String? = null
+        @Query("take") limit: Int? = null
     ): Single<OffersResponse>
 
     @GET("api/offers/{jobId}")
     fun getJobDetails(@Path("jobId") jobId: Int): Single<OfferResponse>
 
-    @Multipart
-    @POST("events")
-    fun addNews(@Part parts: List<MultipartBody.Part>): Single<List<NewsResponse>>
-
     @GET("api/news")
     fun getNews(
         @Query("skip") skip: Int = 0,
-        @Query("take") limit: String? = null
+        @Query("take") limit: Int? = null
     ): Single<NewsListResponse>
-
-//    @GET("jobs/{eventId}")
-//    fun getNewsDetails(@Path("jobId") eventId: Int): Single<NewsResponse>
 
     //user
 
@@ -66,6 +59,9 @@ interface UpitApi {
 
     @POST("api/Account/Logout")
     fun logout(): Completable
+
+    @PUT("api/offers/apply/{id}")
+    fun apply(@Path("id") id: String):Single<OfferResponse>
 
     //call
 

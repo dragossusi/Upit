@@ -9,7 +9,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
-import kotlinx.android.synthetic.main.activity_job_details.*
+import com.bumptech.glide.Glide
 import ro.rachieru.dragos.base.BaseActivity
 import ro.rachieru.dragos.base.ProgressViewDelegate
 import ro.rachieru.dragos.upit.R
@@ -18,7 +18,6 @@ import ro.rachieru.dragos.upit.utils.BUNDLE_RESOURCE_ID
 import ro.rachieru.dragos.videocall.CallActivity
 import ro.rachierudragos.upitapi.UpitApi
 import ro.rachierudragos.upitapi.entities.response.CallResponse
-import ro.rachierudragos.upitapi.entities.response.JobsResponse
 import ro.rachierudragos.upitapi.entities.response.OfferResponse
 
 /**
@@ -92,9 +91,6 @@ class JobDetailsActivity : BaseActivity<JobDetailsPresenter>(), ProgressViewDele
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//            if (requestCode == STORAGE_REQUEST_CODE) {
-//                presenter.getFiles(mChatRoomViewEntity.getId())
-//            }
             if (requestCode == VIDEO_CALL_REQUEST_CODE) {
                 presenter.startVideoCall(this, _binding.job!!.createdBy!!)
             }
@@ -104,20 +100,16 @@ class JobDetailsActivity : BaseActivity<JobDetailsPresenter>(), ProgressViewDele
     }
 
     fun onVideoCallCanStart(data: CallResponse) {
-//        val user = data.user!!
         CallActivity.connectToRoom(
             this,
             data.chatRoom!!,
             true,
             false,
             0
-//            user.name!!,
-//            user.avatarPath
         )
     }
 
     fun onVideoCallRejected() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     fun onVideoCallError(message: String?) {
@@ -129,13 +121,19 @@ class JobDetailsActivity : BaseActivity<JobDetailsPresenter>(), ProgressViewDele
         supportActionBar!!.title = it.title
         _binding.toolbar.title = it.title
         _binding.collapse.title = it.title
+        Glide.with(this)
+            .load(it.documents?.run {
+                get(0).path
+            })
+            .centerCrop()
+            .into(_binding.newsImage)
     }
 
     override fun showProgress() {
-        progress_circular.visibility = View.VISIBLE
+        _binding.progressCircular.visibility = View.VISIBLE
     }
 
     override fun hideProgress() {
-        progress_circular.visibility = View.GONE
+        _binding.progressCircular.visibility = View.GONE
     }
 }
