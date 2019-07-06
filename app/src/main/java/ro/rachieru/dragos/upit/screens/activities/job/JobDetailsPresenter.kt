@@ -27,6 +27,14 @@ class JobDetailsPresenter(
         doIfHasInternet(
             context,
             api.getJobDetails(jobId)
+                .subscribeOn(Schedulers.io())
+                .map {
+                    if(it.companyDescription.isNullOrEmpty())
+                        it.companyDescription = null
+                    if(it.description.isNullOrEmpty())
+                        it.description = null
+                    it
+                }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     viewDelegate.hideProgress()
@@ -114,6 +122,23 @@ class JobDetailsPresenter(
                 }),
             onStart = viewDelegate::showProgressVideoCall,
             onNoInternet = viewDelegate::onNoInternetConnection
+        )
+    }
+
+    fun applyForJob(context: Context, jobId: Int) {
+        doIfHasInternet(
+            context,
+            d = api.apply(jobId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    viewDelegate.hideApplyProgress()
+                    viewDelegate.onApplied(it)
+                }, {
+                    viewDelegate.hideApplyProgress()
+                    viewDelegate.onError(it)
+                }),
+            onStart = viewDelegate::showApplyProgress,
+            viewDelegate = viewDelegate
         )
     }
 

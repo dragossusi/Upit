@@ -70,6 +70,15 @@ class MainActivity : BaseActivity<IMainPresenter>(), NavigationView.OnNavigation
         _binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
+        _binding.navView.getHeaderView(0).let {
+            Glide.with(this)
+                .load(user.profilePic)
+                .circleCrop()
+                .into(it.image_user)
+            it.text_user_name.text = user.fullName
+            it.text_user_email.text = user.email
+        }
+        
         _binding.navView.setNavigationItemSelectedListener(this)
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragments_view, NewsFragment())

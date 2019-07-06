@@ -61,7 +61,7 @@ interface UpitApi {
     fun logout(): Completable
 
     @PUT("api/offers/apply/{id}")
-    fun apply(@Path("id") id: String):Single<OfferResponse>
+    fun apply(@Path("id") id: Int):Single<OfferResponse>
 
     //call
 
@@ -73,7 +73,7 @@ interface UpitApi {
 
 }
 
-const val HOST = "http://77.81.104.130:8082"
+const val HOST = "https://api.interviewvideochatmodule.ro:8083"
 
 val upitApiModule = module {
 

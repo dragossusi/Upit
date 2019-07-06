@@ -1,6 +1,7 @@
 package ro.rachieru.dragos.base.extensions
 
 import android.view.View
+import androidx.databinding.BindingAdapter
 
 /**
  * Upit

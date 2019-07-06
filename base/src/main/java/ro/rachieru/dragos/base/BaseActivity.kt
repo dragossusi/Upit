@@ -22,6 +22,16 @@ abstract class BaseActivity<P : IPresenter> : AppCompatActivity(), ViewDelegate 
         presenter = initPresenter(get())
     }
 
+    override fun onPause() {
+        super.onPause()
+        presenter.clear()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.dispose()
+    }
+
     override fun onError(e: Throwable) {
         Toast.makeText(this, e.message ?: getString(R.string.error_general), Toast.LENGTH_LONG).show()
     }

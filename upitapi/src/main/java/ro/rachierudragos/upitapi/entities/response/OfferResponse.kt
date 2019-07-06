@@ -18,10 +18,10 @@ class OfferResponse(
     val offerID: Int? = null,
 
     @field:SerializedName("description")
-    val description: String? = null,
+    var description: String? = null,
 
     @field:SerializedName("company_description")
-    val companyDescription: String? = null,
+    var companyDescription: String? = null,
 
     @field:SerializedName("title")
     val title: String? = null,

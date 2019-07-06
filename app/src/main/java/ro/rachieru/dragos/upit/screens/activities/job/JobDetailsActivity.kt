@@ -12,11 +12,14 @@ import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import ro.rachieru.dragos.base.BaseActivity
 import ro.rachieru.dragos.base.ProgressViewDelegate
+import ro.rachieru.dragos.base.extensions.gone
+import ro.rachieru.dragos.base.extensions.visible
 import ro.rachieru.dragos.upit.R
 import ro.rachieru.dragos.upit.databinding.ActivityJobDetailsBinding
 import ro.rachieru.dragos.upit.utils.BUNDLE_RESOURCE_ID
 import ro.rachieru.dragos.videocall.CallActivity
 import ro.rachierudragos.upitapi.UpitApi
+import ro.rachierudragos.upitapi.entities.enums.ApplianceStatus
 import ro.rachierudragos.upitapi.entities.response.CallResponse
 import ro.rachierudragos.upitapi.entities.response.OfferResponse
 
@@ -26,7 +29,7 @@ import ro.rachierudragos.upitapi.entities.response.OfferResponse
  * @author Dragos
  * @since 17.06.2019
  */
-class JobDetailsActivity : BaseActivity<JobDetailsPresenter>(), ProgressViewDelegate {
+class JobDetailsActivity : BaseActivity<JobDetailsPresenter>(), ProgressViewDelegate, View.OnClickListener {
 
     private val VIDEO_CALL_REQUEST_CODE = 2
     private val STORAGE_REQUEST_CODE = 1
@@ -43,6 +46,7 @@ class JobDetailsActivity : BaseActivity<JobDetailsPresenter>(), ProgressViewDele
         super.onCreate(savedInstanceState)
         jobId = intent.getIntExtra(BUNDLE_RESOURCE_ID, 0)
         _binding = DataBindingUtil.setContentView(this, R.layout.activity_job_details)
+        _binding.btnApply.setOnClickListener(this)
         setSupportActionBar(_binding.toolbar)
         presenter.getDetails(this, jobId)
     }
@@ -58,6 +62,10 @@ class JobDetailsActivity : BaseActivity<JobDetailsPresenter>(), ProgressViewDele
             presenter.checkVideoCallPermissions(this)
             return true
         } else return super.onOptionsItemSelected(item)
+    }
+
+    override fun onClick(p0: View) {
+        presenter.applyForJob(p0.context, jobId)
     }
 
     fun showProgressVideoCall() {
@@ -90,7 +98,7 @@ class JobDetailsActivity : BaseActivity<JobDetailsPresenter>(), ProgressViewDele
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             if (requestCode == VIDEO_CALL_REQUEST_CODE) {
                 presenter.startVideoCall(this, _binding.job!!.createdBy!!)
             }
@@ -127,13 +135,29 @@ class JobDetailsActivity : BaseActivity<JobDetailsPresenter>(), ProgressViewDele
             })
             .centerCrop()
             .into(_binding.newsImage)
+//        callButton.isVisible = it.applianceStatus == ApplianceStatus.APPROVED
     }
 
     override fun showProgress() {
-        _binding.progressCircular.visibility = View.VISIBLE
+        _binding.progressCircular.visible()
     }
 
     override fun hideProgress() {
-        _binding.progressCircular.visibility = View.GONE
+        _binding.progressCircular.gone()
+    }
+
+    fun showApplyProgress() {
+        _binding.progressApply.visible()
+        _binding.btnApply.gone()
+    }
+
+    fun hideApplyProgress() {
+        _binding.progressApply.gone()
+        _binding.btnApply.visible()
+    }
+
+    fun onApplied(offer: OfferResponse) {
+        onJobDetails(offer)
+        Toast.makeText(this, R.string.apply_sent, Toast.LENGTH_SHORT).show();
     }
 }

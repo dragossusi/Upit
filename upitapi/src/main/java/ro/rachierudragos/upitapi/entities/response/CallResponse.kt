@@ -1,10 +1,11 @@
 package ro.rachierudragos.upitapi.entities.response
 
 import com.google.gson.annotations.SerializedName
+import ro.rachierudragos.upitapi.UserDetails
 
 class CallResponse(
 
-    @field:SerializedName("chatRoom")
+    @field:SerializedName("optionalName")
     val chatRoom: String? = null,
 
     @field:SerializedName("status")
